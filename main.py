@@ -1,2 +1,2 @@
 def greet():
-    return "Hello world"
+    return "Xin chào thế giới"
