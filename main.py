@@ -1,7 +1,6 @@
-def func():
-    print("Code A")
+def add(a, b):
+    return a + b
 
-def func():
-    print("Code B")
+add = 5
 
-func()
+print(add(1, 2))
