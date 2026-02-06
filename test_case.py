@@ -1,3 +1,3 @@
 from string import printable
 
-printable("hello giahuy")
+printable("hello giahuy !!!")
