@@ -17,7 +17,7 @@ def test_mu_duong_2():
 
 
 def test_mu_am():
-    assert power(2, -1) == 0.5
+    assert power(2, -1) == 0.6
     assert power(2, -2) == 0.25
 
 
@@ -37,6 +37,6 @@ def test_x_0():
         power(0, -5)
 
 
-@pytest.mark.timeout(2)
+@pytest.mark.timeout(2, method="thread")
 def test_timeout():
     time.sleep(3)
