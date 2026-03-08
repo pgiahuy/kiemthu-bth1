@@ -36,8 +36,6 @@ def test_x_0():
     with pytest.raises(ZeroDivisionError):
         power(0, -5)
 
-
-
 @pytest.mark.timeout(2)
 def test_timeout():
     time.sleep(3)
