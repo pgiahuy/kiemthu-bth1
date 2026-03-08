@@ -38,4 +38,4 @@ def test_x_0():
 
 @pytest.mark.timeout(2)
 def test_timeout():
-    time.sleep(3)
+    time.sleep(1)
