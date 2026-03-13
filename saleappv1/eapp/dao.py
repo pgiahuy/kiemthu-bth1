@@ -59,6 +59,7 @@ def add_user(name, username, password, avatar):
 
     password = str(hashlib.md5(password.strip().encode('utf-8')).hexdigest())
     u = User(name=name.strip(), username=username.strip(), password=password)
+
     if avatar:
         res = cloudinary.uploader.upload(avatar)
         u.avatar = res.get("secure_url")
