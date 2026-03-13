@@ -38,6 +38,9 @@ def register_process():
     try:
         add_user(name=data.get('name'), username=data.get('username'), password=password, avatar=request.files.get('avatar'))
         return redirect('/login')
+
+    except ValueError as ex:
+        return render_template('register.html', err_msg=str(ex))
     except Exception as ex:
         return render_template('register.html', err_msg=str(ex))
 
