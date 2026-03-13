@@ -1,0 +1,87 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+
+{% if current_user.is_authenticated %}
+<h1 class="text-info mt-1">CHÀO MỪNG ĐẾN TRANG QUẢN TRỊ</h1>
+<h2 class="text-success">Chào {{ current_user.name }}!</h2>
+
+<div class="row">
+    <div class="col-md-5 col-6">
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Tên danh mục</th>
+                <th>Số sản phẩm</th>
+            </tr>
+            {% for s in cate_stats %}
+            <tr>
+                <td>{{ s[0] }}</td>
+                <td>{{ s[1] }}</td>
+                <td>{{ s[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="col-md-7 col-6">
+        <canvas id="myChart"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function drawChart(ctx, labels, data) {
+            new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: '# Doanh thu',
+                data: data,
+                borderWidth: 1,
+                backgroundColor: ['red', 'green', 'blue', 'gold', 'brown', 'pink']
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+    }
+window.onload = function() {
+
+    let labels = [];
+    let data = [];
+
+    {% for s in cate_stats %}
+    labels.push('{{s[1]}}');
+    data.push({{s[2]}});
+    {% endfor %}
+
+   const ctx = document.getElementById('myChart');
+   drawChart(ctx, labels, data);
+
+}
+</script>
+
+{% else %}
+<h2 class="text-success text-center">ĐĂNG NHẬP QUẢN TRỊ</h2>
+
+<form method="post" action="/login?next=/admin">
+  <div class="form-group">
+    <label for="name">Tên đăng nhập:</label>
+    <input type="text" class="form-control" placeholder="Tên đăng nhập" id="name" name="username" required />
+  </div>
+  <div class="form-group">
+    <label for="pwd">Mật khẩu:</label>
+    <input type="password" class="form-control" placeholder="Mật khẩu" id="pwd" name="password" required />
+  </div>
+  <button type="submit" class="btn btn-primary">Đăng nhập</button>
+</form>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}Giỏ hàng{% endblock %}
+
+{% block content %}
+
+<h1 class="text-success text-center mt-2">GIỎ HÀNG</h1>
+
+{% if 'cart' in session %}
+  <table class="table">
+    <tr>
+      <th>Id</th>
+      <th>Tên sản phẩm</th>
+      <th>Giá sản phẩm</th>
+      <th>Số lượng</th>
+      <th></th>
+    </tr>
+    {% for c in session['cart'].values() %}
+    <tr id="cart{{ c.id }}">
+      <td>{{ c.id }}</td>
+      <td>{{ c.name }}</td>
+      <td>{{ "{:,.0f}".format(c.price) }} VNĐ</td>
+      <td>
+        <input type="number" value="{{ c.quantity }}" class="form-control" onblur="updateCart({{ c.id }}, this)" />
+      </td>
+      <td>
+        <button class="btn btn-danger" onclick="deleteCart({{ c.id }})">&times;</button>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+<div class="alert alert-info">
+  <h3>Tổng tiền: <span class="cart-amount">{{ "{:,.0f}".format(cart_stats.total_amount) }}</span> VNĐ</h3>
+  <h3>Tổng số lượng: <span class="cart-counter">{{ cart_stats.total_quantity }}</span></h3>
+</div>
+
+{% if current_user.is_authenticated %}
+<div class="mt-1 mb-1">
+  <button class="btn btn-success" onclick="pay()">Thanh toán</button>
+</div>
+{% else %}
+<div class="mt-1 mb-1">
+  Vui lòng <a href="/login?next=/cart">đăng nhập</a> để thanh toán!
+</div>
+{% endif %}
+
+{% else %}
+<div class="alert alert-warning mt-2">
+  Không có sản phẩm trong giỏ hoăc giỏ đã thanh toán!
+</div>
+{% endif %}
+
+{% endblock %}

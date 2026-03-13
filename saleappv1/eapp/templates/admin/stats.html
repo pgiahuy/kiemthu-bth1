@@ -1,0 +1,101 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<h1 class="text-center text-success mt-2">THỐNG KÊ & BÁO CÁO</h1>
+
+<div class="row">
+    <div class="col-md-5 col-6">
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Tên sản phẩm</th>
+                <th>Tổng doanh thu</th>
+            </tr>
+            {% for s in revenue_products %}
+            <tr>
+                <td>{{ s[0] }}</td>
+                <td>{{ s[1] }}</td>
+                <td>{{ s[2] }} VNĐ</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="col-md-7 col-6">
+        <canvas id="myChart1"></canvas>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-5 col-6">
+        <table class="table">
+            <tr>
+                <th>Thời gian</th>
+                <th>Tổng doanh thu</th>
+            </tr>
+            {% for s in revenue_times %}
+            <tr>
+                <td>{{ s[0] }}</td>
+
+                <td>{{ s[1] }} VNĐ</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="col-md-7 col-6">
+        <canvas id="myChart2"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function drawChart(ctx, labels, data) {
+            new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: '# Doanh thu',
+                data: data,
+                borderWidth: 1,
+                backgroundColor: ['red', 'green', 'blue', 'gold', 'brown', 'pink']
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+    }
+window.onload = function() {
+
+    let labels = [];
+    let data = [];
+
+    {% for s in revenue_products %}
+    labels.push('{{s[1]}}');
+    data.push({{s[2]}});
+    {% endfor %}
+
+   const ctx1 = document.getElementById('myChart1');
+   drawChart(ctx1, labels, data);
+
+
+   let labels2 = [];
+    let data2 = [];
+
+    {% for s in revenue_times %}
+    labels2.push({{s[0]}});
+    data2.push({{s[1]}});
+    {% endfor %}
+   const ctx2 = document.getElementById('myChart2');
+   drawChart(ctx2, labels2, data2);
+
+}
+</script>
+
+{% endblock %}
