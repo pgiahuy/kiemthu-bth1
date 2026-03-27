@@ -25,6 +25,8 @@ def test_app():
         db.create_all()
         yield app
         db.drop_all()
+        db.engine.dispose()
+
 
 
 @pytest.fixture
