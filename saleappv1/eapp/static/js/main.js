@@ -9,6 +9,7 @@ function addToCart(id, name, price) {
         headers: {
             "Content-Type": "application/json"
         }
+        
     }).then(res => res.json()).then(data => {
         let elems = document.getElementsByClassName("cart-counter");
         for (let e of elems)
