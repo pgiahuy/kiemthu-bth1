@@ -11,6 +11,9 @@ from flask import current_app
 import re
 
 def load_categories():
+
+
+
     return Category.query.all()
 
 def load_products(cate_id=None, kw=None, page=None):
